@@ -17,14 +17,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ExpenseServiceTest {
+class ExpenseServiceTest {
 
   @Mock private ExpenseRepo expenseRepo;
 
   @InjectMocks ExpenseService expenseService;
 
   @Test
-  public void clientFindById() {
+  void clientFindById() {
     long id = 1L;
     Client client = new Client(id, "Alex");
     Expense expense = new Expense(3L, new Date(), new Double(10), client);
@@ -40,7 +40,7 @@ public class ExpenseServiceTest {
   }
 
   @Test
-  public void saveExpense() {
+  void saveExpense() {
     long id = 1L;
     Client client = new Client(id, "Sid");
     Expense expense = new Expense(3L, new Date(), new Double(10), client);

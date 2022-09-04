@@ -16,14 +16,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ClientServiceTest {
+class ClientServiceTest {
 
   @Mock private ClientRepo clientRepo;
 
   @InjectMocks ClientService clientService;
 
   @Test
-  public void findByClientId() {
+  void findByClientId() {
     long id = 1L;
     Client client = new Client(id, "Sid");
     Expense expense = new Expense(3L, new Date(), new Double(10), client);

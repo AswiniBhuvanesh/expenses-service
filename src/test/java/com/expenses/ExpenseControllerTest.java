@@ -26,7 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(ExpenseController.class)
-public class ExpenseControllerTest {
+class ExpenseControllerTest {
 
   @Autowired private MockMvc mockMvc;
 
@@ -39,7 +39,7 @@ public class ExpenseControllerTest {
   @MockBean private ExpenseRepo expenseRepo;
 
   @Test
-  public void shouldNotCreateExpense() throws Exception {
+  void shouldNotCreateExpense() throws Exception {
     Client client = new Client(1, "John");
     Long clientId = 1L;
 
@@ -74,7 +74,7 @@ public class ExpenseControllerTest {
   }
 
   @Test
-  public void getAmountSpent() {
+  void getAmountSpent() {
     Expense expense = new Expense();
     expense.setAmountSpent(new Double(10));
     assertThat(expense.getAmountSpent()).isEqualTo(new Double(10));

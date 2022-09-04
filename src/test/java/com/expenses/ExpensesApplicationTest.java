@@ -9,7 +9,7 @@ class ExpensesApplicationTest {
   void contextLoads() {}
 
   @Test
-  public void main() {
+  void main() {
     ExpensesApplication.main(new String[] {});
   }
 }
