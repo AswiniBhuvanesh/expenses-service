@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -78,5 +79,47 @@ class ExpenseControllerTest {
     Expense expense = new Expense();
     expense.setAmountSpent(new Double(10));
     assertThat(expense.getAmountSpent()).isEqualTo(new Double(10));
+  }
+
+  @Test
+  void shouldThrowErrorBlank() throws Exception {
+    Client client = new Client(1, null);
+    Long clientId = 1L;
+
+    Expense expense = new Expense(3L, null, new Double(10), client);
+    when(clientService.findById(clientId)).thenReturn(Optional.of(client));
+    when(expenseService.save(expense)).thenThrow(RuntimeException.class);
+    mockMvc
+        .perform(
+            post("/api/expenses/{clientId}", clientId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(expense)))
+        .andExpect(status().isNotFound())
+        .andDo(print());
+  }
+
+  @Test
+  void testGetClientExpense() throws Exception {
+    Client client = new Client(1, "John");
+    Long clientId = 1L;
+
+    Expense expense = new Expense(3L, new Date(), new Double(10), client);
+    when(clientService.existsById(clientId)).thenReturn(false);
+    when(expenseService.save(expense)).thenReturn(expense);
+    mockMvc
+        .perform(
+            get("/api/expenses/{clientId}", clientId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(expense)))
+        .andExpect(status().isNotFound())
+        .andDo(print());
+  }
+
+  @Test
+  void getName() {
+
+    Client client = new Client();
+    client.setName("Test");
+    Assertions.assertThat(client.getName()).isEqualTo("Test");
   }
 }

@@ -1,6 +1,7 @@
 package com.expenses;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import com.expenses.model.Client;
@@ -32,5 +33,15 @@ class ClientServiceTest {
 
     Optional<Client> clientFromSer = clientService.findById(id);
     assertThat(clientFromSer.get().getId()).isEqualTo(id);
+  }
+
+  @Test
+  void testExistByClientId() {
+    long id = 1L;
+    Client client = new Client(id, "Sid");
+    Expense expense = new Expense(3L, new Date(), new Double(10), client);
+    // providing knowledge
+    when(clientRepo.existsById(id)).thenReturn(true);
+    assertTrue(clientService.existsById(id));
   }
 }
